@@ -1,25 +1,22 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PicMatch1 extends StatefulWidget {
-
-   PicMatch1({Key? key}) : super(key: key ){
-print("main contrcuctor");
-}
+  PicMatch1({Key? key}) : super(key: key) {
+    log("main contrcuctor");
+  }
 
   @override
   State<PicMatch1> createState() {
-    print("from create state");
+    log("from create state");
 
     return _PicMatch1State();
   }
 }
 
 class _PicMatch1State extends State<PicMatch1> {
-
-
-
-
   bool val = true;
   List<bool> isVisable = List.filled(12, true);
   int click = 1;
@@ -52,11 +49,10 @@ class _PicMatch1State extends State<PicMatch1> {
 
   @override
   void initState() {
-
-    print("initstate called");
+    log("initstate called");
     super.initState();
 
-    Future.delayed(Duration(seconds: 5)).then((value) {
+    Future.delayed(const Duration(seconds: 5)).then((value) {
       isVisable = List.filled(12, false);
 
       setState(() {});
@@ -69,19 +65,19 @@ class _PicMatch1State extends State<PicMatch1> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    print("did change dep");
+    log("did change dep");
   }
 
   @override
   void didUpdateWidget(covariant PicMatch1 oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print("did update widget");
+    log("did update widget");
   }
 
   @override
   void dispose() {
     super.dispose();
-    print("dispose called");
+    log("dispose called");
   }
 
   @override
@@ -96,11 +92,11 @@ class _PicMatch1State extends State<PicMatch1> {
     double bodyheight = h - appbarh - bottombarh;
     int i = 1;
 
-    var myst = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+    var myst = const TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
 
     Stream<int> time() async* {
       for (i = 1; i <= 30; i++) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         yield i;
 
         // print(i);
@@ -109,18 +105,18 @@ class _PicMatch1State extends State<PicMatch1> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Picture Match"),
+        title: const Text("Picture Match"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             height: 100,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text("Score :${score}", style: myst),
+                Text("Score :$score", style: myst),
                 Text(
                   "Highest Score :$highScore",
                   style: myst,
@@ -158,12 +154,6 @@ class _PicMatch1State extends State<PicMatch1> {
               itemBuilder: (context, index) {
                 return Visibility(
                   visible: isVisable[index],
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.yellow,
-                        image: DecorationImage(
-                            image: AssetImage("assets/images/${img[index]}"))),
-                  ),
                   replacement: InkWell(
                     onTap: () async {
                       if (click == 1) {
@@ -171,7 +161,7 @@ class _PicMatch1State extends State<PicMatch1> {
                         pos1 = index;
                         click = 3;
 
-                        Future.delayed(Duration(milliseconds: 10))
+                        Future.delayed(const Duration(milliseconds: 10))
                             .then((value) {
                           setState(() {
                             click = 2;
@@ -210,7 +200,8 @@ class _PicMatch1State extends State<PicMatch1> {
                           score = tempscore;
 
                           sp.setInt('score', tempscore);
-                          Future.delayed(Duration(seconds: 1)).then((value) {
+                          Future.delayed(const Duration(seconds: 1))
+                              .then((value) {
                             setState(() {
                               isVisable[pos1] = false;
                               isVisable[pos2] = false;
@@ -220,7 +211,8 @@ class _PicMatch1State extends State<PicMatch1> {
                           print("not match");
                         }
 
-                        Future.delayed(Duration(seconds: 1)).then((value) {
+                        Future.delayed(const Duration(seconds: 1))
+                            .then((value) {
                           setState(() {
                             click = 1;
                           });
@@ -233,6 +225,12 @@ class _PicMatch1State extends State<PicMatch1> {
                       color: Colors.teal,
                     ),
                   ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.yellow,
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/${img[index]}"))),
+                  ),
                 );
               },
             ),
@@ -241,6 +239,4 @@ class _PicMatch1State extends State<PicMatch1> {
       ),
     );
   }
-
-
 }
