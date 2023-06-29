@@ -82,7 +82,7 @@ class _PicMatch1State extends State<PicMatch1> {
 
   @override
   Widget build(BuildContext context) {
-    print("build method called");
+    log("build method called");
 
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
@@ -98,8 +98,6 @@ class _PicMatch1State extends State<PicMatch1> {
       for (i = 1; i <= 30; i++) {
         await Future.delayed(const Duration(seconds: 1));
         yield i;
-
-        // print(i);
       }
     }
 
@@ -175,14 +173,14 @@ class _PicMatch1State extends State<PicMatch1> {
                         click = 3;
 
                         if (img[pos1] == img[pos2]) {
-                          print("match");
+                          log("match");
 
                           final sp = await SharedPreferences.getInstance();
                           int tempscore = sp.getInt("score") ?? 0;
                           tempscore = tempscore + 10;
 
                           sp.setInt('score', tempscore);
-                          print(tempscore);
+                          log(tempscore.toString());
 
                           int temphighscore = sp.getInt("high") ?? 0;
 
@@ -208,7 +206,7 @@ class _PicMatch1State extends State<PicMatch1> {
                             });
                           });
 
-                          print("not match");
+                          log("not match");
                         }
 
                         Future.delayed(const Duration(seconds: 1))
